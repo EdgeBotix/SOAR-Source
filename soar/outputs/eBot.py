@@ -635,16 +635,28 @@ class eBot:
         stall = (recv[9])
         bump = (recv[10])
         sonars = [-1, -1, -1, -1, -1, -1]
-        sonars[0] = (recv[11] << 8) | (recv[12])
+
+        #Right Sonar
+        sonars[4] = (recv[11] << 8) | (recv[12])
         #print 'Sonar 1: ', sonars[0]
-        sonars[1] = (recv[13] << 8) | (recv[14])
+
+        #Right Front Sonar
+        sonars[3] = (recv[13] << 8) | (recv[14])
         #print 'Sonar 2: ', sonars[1]
+
+        #Front Sonar
         sonars[2] = (recv[15] << 8) | (recv[16])
         #print 'Sonar 3: ', sonars[2]
-        sonars[3] = (recv[17] << 8) | (recv[18])
+
+        #Left Front Sonar
+        sonars[1] = (recv[17] << 8) | (recv[18])
         #print 'Sonar 4: ', sonars[3]
-        sonars[4] = (recv[19] << 8) | (recv[20])
+
+        #Left Sonar
+        sonars[0] = (recv[19] << 8) | (recv[20])
         #print 'Sonar 5: ', sonars[4]
+
+        #Back Sonar
         sonars[5] = (recv[21] << 8) | (recv[22])
         #print 'Sonar 6: ', sonars[5]
 
