@@ -31,11 +31,11 @@ debug = skip
 #SONAR_INFO=[(-0.134, 0.08, pi/2), (-0.077, 0.156, pi/6), (-0.0266, 0.174, pi/18), (0.0266, 0.174, -pi/18), (0.077, 0.156, -pi/6), (0.134, 0.08, -pi/2)] #entries need to be (x,y,th), x,y are the cartesian coordinate locations of the sonars in meters, and th is the orientation of it with respect to the nose of the robot (CCW is positive)
 
 #SONAR_INFO=[(-0.105, 0.073, 90.0*pi/180), (-0.078, 0.130, 41.0*pi/180), (-0.030, 0.154, 15.0*pi/180), (0.030, 0.154, -15.0*pi/180), (0.078, 0.130, -41*pi/180), (0.105, 0.073, -90.0*pi/180)] #entries need to be (x,y,th), x,y are the cartesian coordinate locations of the sonars in meters, and th is the orientation of it with respect to the nose of the robot (CCW is positive)
-SONAR_INFO = [(0.04,  -0.012,  -90*pi/180),
-              (0.028,  0.012,  -45*pi/180),
+SONAR_INFO = [(-0.04,  -0.012,  90*pi/180),
+              (-0.028,  0.012,  45*pi/180),
               (0,     0.029,   0*pi/180),
-              (-0.028,0.012,  45*pi/180),
-              (-0.04, -0.012,  90*pi/180),
+              (0.028,0.012,  -45*pi/180),
+              (0.04, -0.012,  -90*pi/180),
               (0,    -0.029, 180*pi/180)]
 
 TELEPORT_PROB = 0

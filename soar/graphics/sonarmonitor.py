@@ -24,11 +24,11 @@ import soar.application
 #              util.Pose(-0.4, -0.12,  90*math.pi/180),
 #              util.Pose(0,    -0.29, 180*math.pi/180)]
 
-sonarPoses = [util.Pose(-0.012,  0.04,    -90*math.pi/180),
-              util.Pose(0.012,   0.028,   -45*math.pi/180),
+sonarPoses = [util.Pose(-0.012,  -0.04,    90*math.pi/180),
+              util.Pose(0.012,   -0.028,   45*math.pi/180),
               util.Pose(0.029,   0,       0*math.pi/180),
-              util.Pose(0.012,   -0.028,  45*math.pi/180),
-              util.Pose( -0.012, -0.04,   90*math.pi/180),
+              util.Pose(0.012,   0.028,  -45*math.pi/180),
+              util.Pose( -0.012, 0.04,   -90*math.pi/180),
               util.Pose(-0.029,  0,       180*math.pi/180)]
 
 #sonarPoses = [util.Pose(0.04,  -0.012, -90*math.pi/180),

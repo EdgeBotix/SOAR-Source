@@ -292,14 +292,14 @@ class eBot:
         ebot_names = []
         for port in ports:
             try:
-                s = Serial(port, baudRate)
+                s = Serial(port, baudRate, timeout=1, writeTimeout=1)
                 s._timeout = 1.0
                 s._writeTimeout = 1.0
-                try:
-                    s.open()
-                except:
-                    continue
-                s.write("?")
+                #try:
+                #    s.open()
+                #except:
+                #    continue
+                s.write("<<1?")
                 sleep(0.5)
                 line = s.readline()
                 if (line[:4] == "eBot"):
