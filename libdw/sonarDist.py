@@ -35,6 +35,7 @@ sonarPoses = [util.Pose(-0.012,  -0.04,    90*math.pi/180),
 sonarMax = 1.5
 """Maximum good sonar reading."""
 
+#TODO: check if returning right value
 def getDistanceRight(sonarValues):
     #CHANGED: 8 to 6 sonar readings
     """
