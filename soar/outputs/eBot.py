@@ -301,11 +301,14 @@ class eBot:
                 #except:
                 #    continue
                 line = "aaaa"
-                while line[:4] != "eBot":
+                while line[:2] != "eB":
+                    if (s.inWaiting()>0):
+                        line = s.readline()
                     s.write("<<1?")
                     sleep(0.5)
+
                     line = s.readline()
-                    if (line[:4] == "eBot"):
+                    if (line[:2] == "eB"):
                         ebot_ports.append(port)
                         ebot_names.append(line)
                         connect = 1
@@ -315,7 +318,7 @@ class eBot:
                         self.port._writeTimeout = 1.0
                         self.port.flushInput()
                         self.port.flushOutput()
-                if (line[:4] == "eBot"):
+                if (line[:2] == "eB"):
                     break
                     #s.close()
 #                    self.
