@@ -170,6 +170,7 @@ class eBot:
             raise CancelGUIAction
         self.portName = -1
         self.sonarsChanged = [0, 0, 0, 0, 0, 0, 0, 0]  #Change to 6 after
+        self.from_update = 0
         self.connectionState = STATE_NO_SYNC
         self.port = None
         self.lastxpos, self.lastypos = 0, 0
@@ -299,19 +300,22 @@ class eBot:
                 #    s.open()
                 #except:
                 #    continue
-                s.write("<<1?")
-                sleep(0.5)
-                line = s.readline()
+                line = "aaaa"
+                while line[:4] != "eBot":
+                    s.write("<<1?")
+                    sleep(0.5)
+                    line = s.readline()
+                    if (line[:4] == "eBot"):
+                        ebot_ports.append(port)
+                        ebot_names.append(line)
+                        connect = 1
+                        self.port = s
+                        self.portName = port
+                        self.port._timeout = 1.0
+                        self.port._writeTimeout = 1.0
+                        self.port.flushInput()
+                        self.port.flushOutput()
                 if (line[:4] == "eBot"):
-                    ebot_ports.append(port)
-                    ebot_names.append(line)
-                    connect = 1
-                    self.port = s
-                    self.portName = port
-                    self.port._timeout = 1.0
-                    self.port._writeTimeout = 1.0
-                    self.port.flushInput()
-                    self.port.flushOutput()
                     break
                     #s.close()
 #                    self.
@@ -489,6 +493,7 @@ class eBot:
             #sleep(.005)
             #self.sendPacket([CMD.SEND])
             sleep(.005)
+            self.from_update = 1
             if (self.sipRecv() > 0):
                 self.zero_recv_cnt = 0
             else:
@@ -502,7 +507,7 @@ class eBot:
     def calcChecksum(self, data):
         c = 0
         i = 3
-        n = data[2] - 2
+        n = data[2] - ord('0') - 2
         while (n > 1):
             c += (data[i] << 8) | (data[i + 1])
             c = c & 0xFFFF
@@ -582,12 +587,14 @@ class eBot:
         for d in range(data[2] - ord('0')):
             data.append(ord(self.port.read()))
 
+            #if self.from_update:
             #crc = self.calcChecksum(data)
             #if data[len(data)-1]!=(crc&0xFF) or data[len(data)-2]!=(crc>>8):
-            #  self.port.flushInput()
-            #  raise Exception("Checksum failure")
-        #    if self.port.inWaiting() > 0:
-        #      self.port.flushInput()
+            #    self.port.flushInput()
+            #   raise Exception("Checksum failure")
+            #if self.port.inWaiting() > 0:
+            #    self.port.flushInput()
+            #self.from_update=0
         return data
 
     # Send a packet

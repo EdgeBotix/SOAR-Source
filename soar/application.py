@@ -25,6 +25,7 @@ import soar.io.userfn
 from soar.io.userfn import UserFunctionIF
 import soar.graphics
 from soar.graphics.sonarmonitor import SonarMonitor
+from soar.graphics.Amigosonarmonitor import AmigoSonarMonitor
 from soar.graphics.scope import Oscilloscope
 from soar.outputs.simulator import ROBOT_POINTS
 from soar.outputs.eBot import EBOT_POINTS
@@ -77,6 +78,7 @@ class application(object):
     brain_images = {'normal' : media_dir + "/brain.gif"}
     joystick_images = {'normal' : media_dir + "/joystick.gif"}
     oscillo_images = {'normal' : media_dir + "/oscillo.gif"}
+    Amigo_simulator_images = {'normal' : media_dir + "/simulator.gif"}
     # if we're on the mac, the buttons won't stay pushed, so
     # we have a different image to indicate active buttons
     self.use_active_button_images = (platform.system() == 'Darwin')
@@ -89,7 +91,7 @@ class application(object):
       brain_images['active'] = media_dir + "/brain_active.gif"
       joystick_images['active'] = media_dir + "/joystick_active.gif"
       oscillo_images['active'] = media_dir + "/oscillo_active.gif"
-
+      Amigo_simulator_images['active'] = media_dir + "/simulator_active.gif"
     self.soar_toolbar_commands.addFormula(('start', self.startall, 'Start',
                                             start_images, lambda: []))
     self.soar_toolbar_commands.addFormula(('step', self.stepall, 'Step',
@@ -106,7 +108,9 @@ class application(object):
     self.soar_toolbar_commands.addFormula(('simulator', self.openSimulator,
                                            'Simulator', simulator_images,
                                            self.openSimulatorDialog))
-
+    self.soar_toolbar_commands.addFormula(('Amigosimulator', self.openAmigoSimulator,
+                                           'AmigoSimulator', Amigo_simulator_images,
+                                           self.openAmigoSimulatorDialog))
     #self.soar_toolbar_commands.addFormula(('pioneer', self.openPioneer,
     #                                       'Pioneer', robot_images,
     #                                       lambda: []))
@@ -281,6 +285,31 @@ class application(object):
         sys.stderr.write("Error loading world.  Perhaps you accidentally chose a brain file?\n")
         return
       self.pushToolbarButton('simulator')
+      self.unpushToolbarButton('Amigosimulator')
+      self.unpushToolbarButton('pioneer')
+      self.unpushToolbarButton('eBot')
+      self.unpushToolbarButton('brain')
+      #CHANGED commented out
+      #self.unpushToolbarButton('joystick')
+      self.reloadBrain(True)
+
+  def openAmigoSimulator(self, world):
+    import soar.outputs.amigo_simulator
+    if (len(world) > 0):
+      #self.enableButton(self.reloadWorldButton)
+      # do this before we try to read the file so we can reload even
+      # if there is an error in the file
+      if self.control:
+        self.enableButton(self.reloadAllButton)
+      try:
+        self.setOutput(lambda: \
+                         soar.outputs.amigo_simulator.Simulator(world,
+                                                          self.simulator_geom))
+      except:
+        sys.stderr.write("Error loading world.  Perhaps you accidentally chose a brain file?\n")
+        return
+      self.pushToolbarButton('Amigosimulator')
+      self.unpushToolbarButton('simulator') 
       self.unpushToolbarButton('pioneer')
       self.unpushToolbarButton('eBot')
       self.unpushToolbarButton('brain')
@@ -309,6 +338,7 @@ class application(object):
           self.enableButton(self.reloadBrainButton)
           self.enableButton(self.reloadAllButton)
       self.unpushToolbarButton('simulator')
+      self.unpushToolbarButton('Amigosimulator')
       self.reloadBrain(True)
     # print "Hello"
     # import soar.outputs.eBotDemo
@@ -417,14 +447,21 @@ class application(object):
       if self.toolbar.buttons['eBot'].cget('relief') == SUNKEN:
         self.sonarMonitor = SonarMonitor(soar.outputs.eBot.EBOT_POINTS,
                                            self.sonarmon_geom)
-      else:
+      elif self.toolbar.buttons['Amigosimulator'].cget('relief') == SUNKEN:
+        self.sonarMonitor = AmigoSonarMonitor(soar.outputs.amigo_simulator.ROBOT_POINTS,
+                                             self.sonarmon_geom)
+      elif self.toolbar.buttons['simulator'].cget('relief') == SUNKEN:
         self.sonarMonitor = SonarMonitor(soar.outputs.simulator.ROBOT_POINTS,
+                                             self.sonarmon_geom)
+      elif self.toolbar.buttons['pioneer'].cget('relief') == SUNKEN:
+        self.sonarMonitor = AmigoSonarMonitor(soar.outputs.amigo_simulator.ROBOT_POINTS,
                                              self.sonarmon_geom)
     self.sonarMonitor.openWindow()
 
   def closeSonarMonitor(self):
     if self.sonarMonitor:
       self.sonarMonitor.closeWindow()
+      self.sonarMonitor = None
 
   def openJoystick(self):
     import soar.controls.joystick
@@ -459,6 +496,13 @@ class application(object):
       self.simulator_dir_default = filename[0:filename.rfind("/")]
     return [filename]
 
+  def openAmigoSimulatorDialog(self):
+    filename = widgets.askopenfilename(title = "Open a World File...",
+                                       initialdir = self.simulator_dir_default,
+                                       filetypes = [("World Files", "*.py")]);
+    if (len(filename) > 0):
+      self.simulator_dir_default = filename[0:filename.rfind("/")]
+    return [filename]
   def openBrainDialog(self):
     filename = widgets.askopenfilename(title = "Open a Brain File...",
                                        initialdir = self.brain_dir_default,
@@ -534,6 +578,7 @@ class application(object):
     self.unpushToolbarButton('stop', self.DISABLED)
     # now we can choose control and output again
     self.enableToolbarButton('simulator')
+    self.enableToolbarButton('Amigosimulator')
     self.enableToolbarButton('pioneer')
     self.enableToolbarButton('brain')
     #CHANGED commented out
