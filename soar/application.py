@@ -28,6 +28,7 @@ from soar.graphics.sonarmonitor import SonarMonitor
 from soar.graphics.Amigosonarmonitor import AmigoSonarMonitor
 from soar.graphics.scope import Oscilloscope
 from soar.outputs.simulator import ROBOT_POINTS
+from soar.outputs.amigo_simulator import ROBOT_POINTS
 from soar.outputs.eBot import EBOT_POINTS
 
 import form.settings as settings

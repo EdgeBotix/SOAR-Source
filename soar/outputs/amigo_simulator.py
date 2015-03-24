@@ -138,7 +138,7 @@ class Obstacle(object):
   def coords(self):
     return self.x, self.y, self.th
  
-class Simulator(object):
+class amigo_simulator(object):
   #DON'T change the dimensions on the fly, just make a new world 
   class World(object):
     def wall(self, start, end):
