@@ -304,7 +304,7 @@ class application(object):
         self.enableButton(self.reloadAllButton)
       try:
         self.setOutput(lambda: \
-                         soar.outputs.amigo_simulator.Simulator(world,
+                         soar.outputs.amigo_simulator.amigo_simulator(world,
                                                           self.simulator_geom))
       except:
         sys.stderr.write("Error loading world.  Perhaps you accidentally chose a brain file?\n")
