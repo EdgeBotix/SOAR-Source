@@ -541,7 +541,6 @@ class Pioneer:
     xpos        = recv[ 4] | (recv[ 5]<<8)
     ypos        = recv[ 6] | (recv[ 7]<<8)
     thpos       = recv[ 8] | (recv[ 9]<<8)
-    print thpos
     #lvel        = recv[10] | (recv[11]<<8)
     #rvel        = recv[12] | (recv[13]<<8)
     #battery     = recv[14]
