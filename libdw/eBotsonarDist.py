@@ -15,20 +15,20 @@ import util
 ##              util.Pose(0.122, -0.118, -5*math.pi/18),
 ##              util.Pose(0.08, -0.134, -math.pi/2)]
 
-sonarPoses = [util.Pose(0.073,  0.105,  90*math.pi/180),
-              util.Pose(0.130,  0.078,  41*math.pi/180),
-              util.Pose(0.154,  0.030,  15*math.pi/180),
-              util.Pose(0.154, -0.030, -15*math.pi/180),
-              util.Pose(0.130, -0.078, -41*math.pi/180),
-              util.Pose(0.073, -0.105, -90*math.pi/180)]
+#onarPoses = [util.Pose(0.073,  0.105,  90*math.pi/180),
+#             util.Pose(0.130,  0.078,  41*math.pi/180),
+#             util.Pose(0.154,  0.030,  15*math.pi/180),
+#             util.Pose(0.154, -0.030, -15*math.pi/180),
+#             util.Pose(0.130, -0.078, -41*math.pi/180),
+#             util.Pose(0.073, -0.105, -90*math.pi/180)]
 
 #eBot Sonars
-#onarPoses = [util.Pose(-0.012,  -0.04,    90*math.pi/180),
-#             util.Pose(0.012,   -0.028,   45*math.pi/180),
-#             util.Pose(0.029,   0,       0*math.pi/180),
-#             util.Pose(0.012,   0.028,  -45*math.pi/180),
-#             util.Pose( -0.012, 0.04,   -90*math.pi/180),
-#             util.Pose(-0.029,  0,       180*math.pi/180)]
+sonarPoses = [util.Pose(-0.012,  -0.04,    90*math.pi/180),
+             util.Pose(0.012,   -0.028,   45*math.pi/180),
+             util.Pose(0.029,   0,       0*math.pi/180),
+             util.Pose(0.012,   0.028,  -45*math.pi/180),
+             util.Pose( -0.012, 0.04,   -90*math.pi/180),
+             util.Pose(-0.029,  0,       180*math.pi/180)]
 """Positions and orientations of sonar sensors with respect to the
               center of the robot.""" 
 
@@ -62,7 +62,7 @@ def getDistanceRightAndAngle(sonarValues):
                          spose.y + d*math.sin(spose.theta)))
         else:
             hits.append(None)
-    return distAndAngle(hits[4], hits[5])
+    return distAndAngle(hits[3], hits[4])
 
 def sonarHit(distance, sonarPose, robotPose):
     """
