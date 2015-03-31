@@ -461,7 +461,7 @@ class eBot:
             data.append(abs(v)%256)
             data.append(0x10)
 
-        rv = int(self.rot.get() * 180 / pi)
+        rv = int(self.rot.get() * 270 / pi)     # 180*1.5
         if (rv >= 0):
             data.append(abs(rv)/256)
             data.append(abs(rv)%256)
