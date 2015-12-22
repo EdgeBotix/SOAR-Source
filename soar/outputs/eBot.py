@@ -298,7 +298,7 @@ class eBot:
         if os.name == "posix":
             if sys.platform == "linux2":
                 #usbSerial = glob.glob('/dev/ttyUSB*')
-                print "Support for this OS is under development."
+                ports = glob.glob('/dev/rfcomm*')
             elif sys.platform == "darwin":
                 ports = glob.glob('/dev/tty.eBot*')
                 #usbSerial = glob.glob('/dev/tty.usbserial*')
